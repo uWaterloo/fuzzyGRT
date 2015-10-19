@@ -1,3 +1,5 @@
+<script src="https://rawgit.com/krisk/Fuse/master/src/fuse.min.js"></script>
+
 <script type="text/ng-template" id="loading.html">
     <widget-row>
         <widget-cell>
@@ -10,30 +12,45 @@
 
 <script type="text/ng-template" id="main.html">
 
-    <!-- SEARCH EXAMPLE -->
-    <div class="collapseMe">
-        <widget-row>
+<!-- FUZZY GRT INTERSECTION SEARCH -->
+<div>
+    <widget-row><widget-cell>Where are you departing from?<br/>
+        Don't worry about spelling!<br/>
+        Feel free to use abbreviations!<br/>
+    </widget-cell></widget-row>
+        <widget-row><widget-cell><h4>Demo: Suggested Fuzzy Searches</h4>
+        <ul>
+            <li>columbia <b>and</b> be<b>a</b>chlawn</li>
+            <li>university <b>at</b> seagram</li>
+            <li><b>DC</b> (as opposed to David Centre)</li>
+            <li>university<b>-</b>king</li>
+            <li><b>SCH</b> (as opposed to South Campus Hall)</li>
+            <li>boar<b>d w</b>alk (as opposed to Boardwalk)</li>
+        </ul>
+    </widget-cell></widget-row>
+    <widget-row>
+        <widget-cell>
+            <form class="form-inline" ng-submit="searchIntersection(intQuery)">
+                <div class="input-group" style="width: 100%;">
+                    <input type="text" class="form-control" ng-model="intQuery" placeholder="Enter an intersection and tap checkmark" />
+                    <span class="input-group-btn" style="overflow:hidden;">
+                        <button class="btn btn-primary glyphicon glyphicon glyphicon-ok btn" type="submit" style="margin-top: -1px;"></button>
+                    </span>
+                </div>
+            </form>
+        </widget-cell>
+    </widget-row>
+
+    <widget-list list="result in results" show-items="3">
+        <widget-row clickable ng-click="showDetails(result)">
+            <widget-cell fill>{{result.intersection}}</widget-cell>
             <widget-cell>
-                <h2>GRT</h2>
+                <widget-icon name="angle-right"></widget-icon>
             </widget-cell>
         </widget-row>
-
-        <widget-search label="GRT Bus Schedule Search" placeholder="Enter bus stop" search-results-title="Bus Stops Found"
-                       data="model" min-char="2" fields="['title','details']">
-            <widget-searching>
-                <widget-list list="item in searchResults" show-items="3">
-                    <widget-row clickable ng-click="showDetails(item)">
-                        <widget-cell fill>{{item.title}}</widget-cell>
-                        <widget-cell>
-                            <widget-icon name="angle-right"></widget-icon>
-                        </widget-cell>
-                    </widget-row>
-                </widget-list>
-            </widget-searching>
-        </widget-search>
-    </div>
-
-
+    </widget-list>
+</div>    
+    
 <!-- Menu template -->
 <script type="text/ng-template" id="widgetMenu.html">
     <li>
@@ -43,20 +60,20 @@
     </li>
 </script>
 
-<!-- VIEW FOR THE SEARCH AND LIST EXAMPLE -->
+<!-- INDIVIDUAL BUS STOP VIEW -->
 
 <script type="text/ng-template" id="details.html">
-    <widget-list-controls prev-click="prevItem" next-click="nextItem" original-item="item.value" prev-text="Previous Item"
-                          next-text="Next Item"></widget-list-controls>
+    <widget-list-controls prev-click="prevItem" next-click="nextItem" original-item="item.value" prev-text="Previous Intersection"
+                          next-text="Next Intersection"></widget-list-controls>
 
     <widget-row>
         <widget-cell>
-            <h2>{{item.value.title}}</h2>
+            <h2>{{item.value.intersection}}</h2>
         </widget-cell>
     </widget-row>
     <widget-row>
         <widget-cell>
-            <div class="pHighlight">{{item.value.details}}</div>
+            Here's the bus stop data for {{item.value.intersection}}
         </widget-cell>
     </widget-row>
 </script>
