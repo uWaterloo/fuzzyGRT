@@ -37,6 +37,22 @@ fuzzyGRTFactory) {
         intersection: "The Boardwalk Terminal",
 		bus_stop_data: "..."
     }];
+    
+    $scope.intQuery = "";
+    
+    /*
+    var options = {
+    	keys: ['intersection']
+    } 
+    var f = new Fuse($scope.model, options);
+    var result = f.search("SCH");
+    console.log(result); */
+    
+    $scope.searchIntersection = function (query) {
+    	var options = { keys: ['intersection'] };
+        var f = new Fuse($scope.model, options);
+        $scope.results = f.search(query);
+    }
 
     // initialize the service
     fuzzyGRTFactory.init($scope);
