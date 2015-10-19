@@ -1,0 +1,200 @@
+<script type="text/ng-template" id="loading.html">
+    <widget-row>
+        <widget-cell>
+            <div class="pDetails">
+                Loading..
+            </div>
+        </widget-cell>
+    </widget-row>
+</script>
+
+<script type="text/ng-template" id="main.html">
+
+    <!-- SEARCH AND LIST EXAMPLE -->
+    <div class="collapseMe">
+        <widget-row>
+            <widget-cell>
+                <h2>Search and List Example</h2>
+            </widget-cell>
+        </widget-row>
+
+        <widget-search label="What do you seek, padawan?" placeholder="Type in a search term you must" search-results-title="Behold"
+                       data="model" min-char="2" fields="['title','details']">
+
+            <widget-filter fields="['category']" filters="[{value:'1',text:'Number 1'},{value:'2',text:'Number 2'}]">
+            </widget-filter>
+
+            <widget-searching>
+                <widget-list list="item in searchResults" show-items="3">
+                    <widget-row clickable ng-click="showDetails(item)">
+                        <widget-cell fill>{{item.title}}</widget-cell>
+                        <widget-cell>
+                            <widget-icon name="angle-right"></widget-icon>
+                        </widget-cell>
+                    </widget-row>
+                </widget-list>
+            </widget-searching>
+
+            <widget-not-searching>
+                <widget-row>
+                    <widget-cell>
+                        <h2>Item List</h2>
+                    </widget-cell>
+                </widget-row>
+                <widget-list list="item in model" show-items="3">
+                    <widget-row clickable ng-click="showDetails(item)">
+                        <widget-cell fill>{{item.title}}</widget-cell>
+                        <widget-cell>
+                            <widget-icon name="angle-right"></widget-icon>
+                        </widget-cell>
+                    </widget-row>
+                </widget-list>
+            </widget-not-searching>
+        </widget-search>
+    </div>
+
+    <!-- DATABASE EXAMPLE -->
+    <div class="collapseMe">
+        <widget-row>
+            <widget-cell>
+                <h2>Database Test</h2>
+            </widget-cell>
+        </widget-row>
+        <div ng-if="dbData.value.status">
+            <widget-row>
+                <widget-cell>
+                    <div class="pDetails" ng-if="dbData.value.status=='noTable'">
+                        Table does not exist,
+                        <a ng-click="createTable()">create table</a>.
+                    </div>
+                </widget-cell>
+            </widget-row>
+        </div>
+        <div ng-if="!dbData.value.status">
+            <widget-row>
+                <widget-cell>
+                    <form class="form-inline" ng-submit="insertData()">
+                        <div class="input-group" style="width: 100%;">
+                            <input type="text" class="form-control" ng-model="insertValue.value" placeholder="Enter some text and submit" />
+                            <span class="input-group-btn" style="overflow:hidden;">
+                                <button class="btn btn-primary glyphicon glyphicon glyphicon-ok btn" type="submit" style="margin-top: -1px;"></button>
+                            </span>
+                        </div>
+                    </form>
+                </widget-cell>
+            </widget-row>
+
+            <widget-row ng-repeat="item in dbData.value">
+                <widget-cell>
+                    <div class="pDetails">Id: {{item.id}}</div>
+                    <div class="pDetails">UserId: {{item.userId}}</div>
+                    <div class="pDetails">Value: {{item.value}}</div>
+                </widget-cell>
+            </widget-row>
+        </div>
+    </div>
+
+    <!-- COMPLEX ROW EXAMPLE -->
+    <div class="collapseMe">
+        <widget-row>
+            <widget-cell>
+                <h2>Complex Row Example</h2>
+            </widget-cell>
+        </widget-row>
+
+        <widget-row>
+            <widget-cell>
+                <widget-icon name="star"></widget-icon>
+            </widget-cell>
+            <widget-cell fill clickable>
+                <widget-cell fill>
+                    Widget cell test fill
+                </widget-cell>
+                <widget-cell>
+                    <widget-icon name="angle-right"></widget-icon>
+                </widget-cell>
+            </widget-cell>
+        </widget-row>
+    </div>
+
+    <!-- OPEN DATA API EXAMPLE -->
+    <div class="collapseMe">
+        <widget-row>
+            <widget-cell>
+                <h2>Open Data API Example</h2>
+            </widget-cell>
+        </widget-row>
+
+        <widget-row ng-if="openDataExampleData.value.error">
+            <widget-cell>
+                <div class="pDetails">{{openDataExampleData.value.error}}</div>
+            </widget-cell>
+        </widget-row>
+
+        <widget-row ng-if="!openDataExampleData.value.error">
+            <widget-cell>
+                <div class="pDetails">List of WatCard Locations:</div>
+                <div class="itemName" ng-repeat="item in openDataExampleData.value">{{item.vendor_name}}</div>
+            </widget-cell>
+        </widget-row>
+    </div>
+
+    <!-- PORTAL DATA SOURCE EXAMPLE -->
+    <div class="collapseMe">
+        <widget-row>
+            <widget-cell>
+                <h2>Important Links</h2>
+            </widget-cell>
+        </widget-row>
+
+        <widget-row ng-repeat="l in links.value['Student Services']">
+            <widget-cell fill>
+                <div class="itemName"><a ng-href="::l.Item2">{{::l.Item1}}</a></div>
+            </widget-cell>
+            <widget-cell>
+                <widget-icon name="link-ext"></widget-icon>
+            </widget-cell>
+        </widget-row>
+    </div>
+
+    <!-- CSS EXAMPLE -->
+    <div class="collapseMe">
+        <widget-row>
+            <widget-cell>
+                <h2>CSS test</h2>
+            </widget-cell>
+        </widget-row>
+        <widget-row>
+            <widget-cell>
+                <span id="cssTest">This is a CSS test</span>
+            </widget-cell>
+        </widget-row>
+    </div>
+</script>
+
+<!-- Menu template -->
+<script type="text/ng-template" id="widgetMenu.html">
+    <li>
+        <a ng-click="menuButtonClick()">
+            Logout
+        </a>
+    </li>
+</script>
+
+<!-- VIEW FOR THE SEARCH AND LIST EXAMPLE -->
+
+<script type="text/ng-template" id="details.html">
+    <widget-list-controls prev-click="prevItem" next-click="nextItem" original-item="item.value" prev-text="Previous Item"
+                          next-text="Next Item"></widget-list-controls>
+
+    <widget-row>
+        <widget-cell>
+            <h2>{{item.value.title}}</h2>
+        </widget-cell>
+    </widget-row>
+    <widget-row>
+        <widget-cell>
+            <div class="pHighlight">{{item.value.details}}</div>
+        </widget-cell>
+    </widget-row>
+</script>
