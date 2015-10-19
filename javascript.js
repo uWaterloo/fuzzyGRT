@@ -19,29 +19,23 @@ fuzzyGRTFactory) {
 
     // Model for the search and list example
     $scope.model = [{
-        title: "item 1",
-        details: "item 1 details",
-        category: '1'
+        intersection: "Columbia / Beechlawn",
+        bus_stop_data: "..."
     }, {
-        title: "item 2",
-        details: "item 2 details",
-        category: '2'
+        intersection: "University / Seagram",
+        bus_stop_data: "..."
     }, {
-        title: "item 3",
-        details: "item 3 details",
-        category: '1'
+        intersection: "U.W. - Davis Centre",
+        bus_stop_data: "..."
     }, {
-        title: "item 4",
-        details: "item 4 details",
-        category: '2'
+        intersection: "University / King",
+		bus_stop_data: "..."
     }, {
-        title: "item 5",
-        details: "item 5 details",
-        category: '1'
+        intersection: "U.W. - South Campus Hall",
+		bus_stop_data: "..."
     }, {
-        title: "item 6",
-        details: "item 6 details",
-        category: '2'
+        intersection: "The Boardwalk Terminal",
+		bus_stop_data: "..."
     }];
 
     // initialize the service
